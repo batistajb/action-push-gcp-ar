@@ -17,6 +17,8 @@ CREDENTIALS=$(cat "${HOME}/credentials.json");
 PROJECT_ID=$(jq -r '.project_id' <<< "$CREDENTIALS")
 INPUT_GCLOUD_ACCOUNT=$(jq -r '.client_email' <<< "$CREDENTIALS")
 
+echo ${CREDENTIALS};
+
 gcloud auth activate-service-account --key-file="${HOME}/credentials.json"
 gcloud config set account "${INPUT_GCLOUD_ACCOUNT}";
 gcloud config set project "${PROJECT_ID}" --quiet;

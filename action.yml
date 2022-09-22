@@ -1,16 +1,17 @@
 # action.yml
-name: 'Hello World'
-description: 'Greet someone and record the time'
+name: 'Action of authentication'
+description: 'authentication and push images google artifact registry'
 inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
+  INPUT_GCLOUD_ACCOUNT:
+    description: 'credentials for gcloud'
     required: true
-    default: 'World'
+
 outputs:
-  time: # id of output
-    description: 'The time we greeted you'
+  repos:
+    description: 'List of repositories'
+
 runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
-    - ${{ inputs.who-to-greet }}
+    - INPUT_CREDENTIALS_IN_TEXT: ${{ inputs.INPUT_GCLOUD_ACCOUNT }}

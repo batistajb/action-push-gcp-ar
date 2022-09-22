@@ -30,7 +30,6 @@ if(python3 parse.py "${INPUT_CREDENTIALS_IN_TEXT}");then
   if gcloud artifacts repositories list; then
     echo "GCP login success...";
 
-
   else
     echo "GCP login failed. Exiting ...";
     exit 1

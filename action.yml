@@ -3,7 +3,7 @@ name: 'Action of authentication'
 description: 'authentication and push images google artifact registry'
 inputs:
   INPUT_GCLOUD_ACCOUNT:
-    description: 'credentials for gcloud'
+    description: 'credentials for gcloud in base 64 format'
     required: true
 
 outputs:

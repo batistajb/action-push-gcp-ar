@@ -8,12 +8,10 @@ RUN curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key --keyri
 
 RUN  apt-get update && apt-get install google-cloud-cli jq -y
 
-WORKDIR /docker
-
 COPY . .
 
 RUN chmod +x entrypoint.sh
 # Code file to execute when the docker container starts up (`entrypoint.sh`)
-ENTRYPOINT ["/docker/entrypoint.sh"]
+ENTRYPOINT ["/entrypoint.sh"]
 
 CMD ["tail", "-f", "/dev/null"]

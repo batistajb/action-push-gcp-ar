@@ -13,5 +13,5 @@ outputs:
 runs:
   using: 'docker'
   image: 'Dockerfile'
-  args:
-    - INPUT_CREDENTIALS_IN_TEXT: ${{ inputs.INPUT_GCLOUD_ACCOUNT }}
+  env:
+    INPUT_CREDENTIALS_IN_TEXT: ${{ inputs.INPUT_GCLOUD_ACCOUNT }}

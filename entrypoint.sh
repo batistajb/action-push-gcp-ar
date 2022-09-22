@@ -10,34 +10,20 @@
 #bash_version   :1.0(1)-release
 ###################################################
 
+set -e
+echo "${INPUT_CREDENTIALS_IN_TEXT}" | base64 -d > "credentials.json"
+
+CREDENTIALS=$(cat credentials.json);
+PROJECT_ID=$(jq -r '.project_id' <<< "$CREDENTIALS")
+INPUT_GCLOUD_ACCOUNT=$(jq -r '.client_email' <<< "$CREDENTIALS")
+
+gcloud auth activate-service-account --key-file="credentials.json"
+gcloud config set account "${INPUT_GCLOUD_ACCOUNT}";
+gcloud config set project "${PROJECT_ID}" --quiet;
+
+gcloud artifacts repositories list
+
 echo "Authenticating in gcloud ...";
-
-if(python3 parse.py "${INPUT_CREDENTIALS_IN_TEXT}");then
-  echo "Logged into google cloud ...";
-
-  CREDENTIALS=$(cat credentials.json);
-  PROJECT_ID=$(jq -r '.project_id' <<< "$CREDENTIALS")
-  INPUT_GCLOUD_ACCOUNT=$(jq -r '.client_email' <<< "$CREDENTIALS")
-
-  echo "Authenticating in gcloud with...";
-  echo "Account Email: ${INPUT_GCLOUD_ACCOUNT}";
-  echo "Project ID: ${PROJECT_ID}";
-
-  gcloud config set project "${PROJECT_ID}";
-  gcloud config set account "${INPUT_GCLOUD_ACCOUNT}";
-  gcloud auth activate-service-account "${INPUT_GCLOUD_ACCOUNT}" --key-file=credentials.json
-
-  if gcloud artifacts repositories list; then
-    echo "GCP login success...";
-
-  else
-    echo "GCP login failed. Exiting ...";
-    exit 1
-  fi
-else
-  echo "Error parsing credentials";
-  exit 1;
-fi
 
 
 

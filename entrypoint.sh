@@ -11,13 +11,13 @@
 ###################################################
 
 set -e
-echo "${INPUT_CREDENTIALS_IN_TEXT}" | base64 -d > "credentials.json"
+echo "${INPUT_CREDENTIALS_IN_TEXT}" | base64 -d > "${HOME}/credentials.json"
 
-CREDENTIALS=$(cat credentials.json);
+CREDENTIALS=$(cat "${HOME}/credentials.json");
 PROJECT_ID=$(jq -r '.project_id' <<< "$CREDENTIALS")
 INPUT_GCLOUD_ACCOUNT=$(jq -r '.client_email' <<< "$CREDENTIALS")
 
-gcloud auth activate-service-account --key-file=credentials.json
+gcloud auth activate-service-account --key-file="${HOME}/credentials.json"
 gcloud config set account "${INPUT_GCLOUD_ACCOUNT}";
 gcloud config set project "${PROJECT_ID}" --quiet;
 
